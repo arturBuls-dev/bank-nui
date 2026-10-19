@@ -9,7 +9,7 @@ MySQL.ready(function()
     MySQL.query.await([[
         CREATE TABLE IF NOT EXISTS bank_nui_transactions (
             id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-            account VARCHAR(20) NOT NULL,
+            account VARCHAR(80) NOT NULL,
             kind VARCHAR(16) NOT NULL,
             amount INT UNSIGNED NOT NULL,
             counterparty VARCHAR(60) NULL,
@@ -19,6 +19,9 @@ MySQL.ready(function()
             INDEX idx_account (account, id)
         )
     ]])
+
+    -- Version 1.0 used VARCHAR(20), but ESX identifiers are longer. Widening is safe to repeat.
+    MySQL.query.await('ALTER TABLE bank_nui_transactions MODIFY account VARCHAR(80) NOT NULL')
 end)
 
 local function logTransaction(account, kind, amount, counterparty, balanceAfter)
@@ -98,7 +101,7 @@ local function snapshot(src)
 
     return {
         bankName = Config.bankName,
-        id = account.id,
+        id = account.number,
         name = account.name,
         cash = account.cash,
         bank = account.bank,
@@ -187,7 +190,7 @@ lib.callback.register('bank_nui:transfer', function(source, targetId, amount)
     if account.bank < amount then return fail('Not enough money in your bank account.') end
 
     if not Bridge.removeMoney(src, 'bank', amount, 'bank-transfer-out') then return fail('The transfer failed.') end
-    if not Bridge.addMoney(target.id, 'bank', amount, 'bank-transfer-in') then
+    if not Bridge.addMoney(target.who, 'bank', amount, 'bank-transfer-in') then
         Bridge.addMoney(src, 'bank', amount, 'bank-transfer-refund') -- the receiver could not get it, give it back
         return fail('The transfer failed.')
     end

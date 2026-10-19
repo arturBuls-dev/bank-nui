@@ -2,8 +2,8 @@ fx_version 'cerulean'
 game 'gta5'
 
 author 'Arthur.dev'
-description 'ATM and banking NUI with server-authoritative money handling (Qbox)'
-version '1.0.0'
+description 'ATM and banking NUI with server-authoritative money handling (Qbox and ESX)'
+version '1.1.0'
 
 lua54 'yes'
 

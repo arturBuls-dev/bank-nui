@@ -1,13 +1,13 @@
 # bank-nui
 
-An ATM and banking window for FiveM (Qbox), built with React + TypeScript. **Every money operation is decided by the server**, the window only asks.
+An ATM and banking window for FiveM (Qbox and ESX), built with React + TypeScript. **Every money operation is decided by the server**, the window only asks.
 
 ![Preview](docs/preview.png)
 
 ## Features
 
 - ATM window on every ATM prop (through `ox_target`): bank and cash balance, deposit, withdraw, transfer to any account and recent activity.
-- Transfers by account number (the character id), also to players who are offline.
+- Transfers by account number. On Qbox the number is the character id and offline players can receive money. On ESX every character gets a short generated number, and only players who are online can receive transfers.
 - Transaction history in the database, with the balance after each operation.
 - Clean black and yellow UI with quick amount buttons.
 
@@ -27,10 +27,19 @@ Note: ATM props exist only on the client, so the server cannot check that a real
 
 ## Requirements
 
-- [qbx_core](https://github.com/Qbox-project/qbx_core), [ox_lib](https://github.com/overextended/ox_lib), [ox_target](https://github.com/overextended/ox_target), [oxmysql](https://github.com/overextended/oxmysql)
+- [ox_lib](https://github.com/overextended/ox_lib), [ox_target](https://github.com/overextended/ox_target), [oxmysql](https://github.com/overextended/oxmysql)
+- One framework, detected automatically: Qbox ([qbx_core](https://github.com/Qbox-project/qbx_core)) or ESX (es_extended)
 - Node.js (only to build the UI)
 
-Developed for Qbox. All framework code is in `bridge/server.lua` (four small functions), so other frameworks can be added there. ESX and QBCore are **not implemented yet**.
+## Framework support
+
+| Framework | Status |
+| --- | --- |
+| Qbox | Tested in game (FiveM build 3258) |
+| ESX | Implemented, **not tested yet**. Transfers go to online players only |
+| QBCore | Not implemented |
+
+All framework code is in `bridge/server.lua`, so other frameworks can be added there without touching the rest.
 
 ## Installation
 

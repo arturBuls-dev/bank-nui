@@ -1,4 +1,7 @@
 Config = {
+    -- 'auto' detects the running framework. Or set one: 'qbox', 'esx'
+    framework = 'auto',
+
     -- Name shown in the window (a made up name, no real brands)
     bankName = 'City Bank',
 
