@@ -1,0 +1,210 @@
+:root {
+  --bg: #0b0b0c;
+  --card: #151517;
+  --line: #2a2a2e;
+  --text: #f4f4f5;
+  --muted: #8a8a92;
+  --accent: #fcaf17;
+  --accent-ink: #1a1204;
+  --good: #3ddc97;
+  --bad: #ff5d5d;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* The page background must be transparent, otherwise it covers the whole game */
+html, body, #root {
+  height: 100%;
+  background: transparent;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: var(--text);
+  user-select: none;
+}
+
+#root { display: flex; align-items: center; justify-content: center; }
+
+/* Browser development mode: imitate the game */
+html.dev, html.dev body { background: linear-gradient(135deg, #3a4150, #1c2028); }
+.dev-open {
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+button { font-family: inherit; }
+
+/* ---------- Window ---------- */
+.atm {
+  width: 460px;
+  max-width: 94vw;
+  max-height: 94vh;
+  overflow-y: auto;
+  padding: 24px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  border-radius: 20px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+  animation: in 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.atm::-webkit-scrollbar { width: 6px; }
+.atm::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+
+.atm-head { display: flex; align-items: flex-start; justify-content: space-between; }
+.eyebrow {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+h1 { font-size: 24px; font-weight: 700; }
+.acct { margin-top: 4px; font-size: 12px; color: var(--muted); }
+.acct b { color: var(--text); letter-spacing: 0.08em; font-weight: 600; }
+
+.close {
+  width: 34px; height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, transform 0.15s;
+}
+.close:hover { color: var(--accent); border-color: var(--accent); transform: rotate(90deg); }
+
+/* ---------- Balances ---------- */
+.balances { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; margin-top: 20px; }
+.bal {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.bal.main {
+  background: linear-gradient(135deg, rgba(252, 175, 23, 0.16), rgba(252, 175, 23, 0.03));
+  border-color: rgba(252, 175, 23, 0.4);
+}
+.bal-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.bal-value { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.bal.main .bal-value { color: var(--accent); }
+
+/* ---------- Tabs ---------- */
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-top: 18px;
+  padding: 4px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.tab {
+  padding: 9px 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.tab:hover { color: var(--text); }
+.tab.on { background: var(--accent); color: var(--accent-ink); }
+
+/* ---------- Form ---------- */
+.panel { display: flex; flex-direction: column; gap: 14px; margin-top: 16px; }
+.field-row { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--muted); }
+.field-row input {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  color: var(--text);
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+  user-select: text;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field-row input::placeholder { color: #55555c; }
+.field-row input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(252, 175, 23, 0.18); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+
+.notice { padding: 10px 14px; border-radius: 12px; font-size: 13px; }
+.notice.ok { background: rgba(61, 220, 151, 0.12); color: var(--good); border: 1px solid rgba(61, 220, 151, 0.35); }
+.notice.error { background: rgba(255, 93, 93, 0.12); color: var(--bad); border: 1px solid rgba(255, 93, 93, 0.35); }
+
+.submit {
+  padding: 14px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(252, 175, 23, 0.3);
+  transition: transform 0.15s, filter 0.15s;
+}
+.submit:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.submit:active { transform: scale(0.98); }
+.submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ---------- History ---------- */
+.history { margin-top: 22px; }
+.history h2 { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.history ul { list-style: none; margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.history li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  font-size: 14px;
+}
+.what { flex: 1; display: flex; flex-direction: column; }
+.what small { margin-top: 2px; color: var(--muted); font-size: 11px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot.in { background: var(--good); }
+.dot.out { background: var(--bad); }
+.amt { font-weight: 700; font-variant-numeric: tabular-nums; }
+.amt.in { color: var(--good); }
+.amt.out { color: var(--bad); }
+.empty { margin-top: 10px; font-size: 13px; color: var(--muted); }
+
+@keyframes in {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
